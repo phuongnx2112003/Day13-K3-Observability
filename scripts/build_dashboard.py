@@ -44,19 +44,20 @@ def build_html(records: list[dict], generated_at: str) -> str:
     tokens_out = sum(r.get("tokens_out", 0) or 0 for r in responses)
     quality = [float(r["quality_score"]) for r in responses if isinstance(r.get("quality_score"), (int, float))]
     error_rate = (len(failures) / len(requests) * 100) if requests else 0.0
+    quality_avg = mean(quality) if quality else 0.0
     cards = [
-        ("P95 latency", f"{percentile(latency, 95):,.0f} ms", "SLO ≤ 3,000 ms", percentile(latency, 95) <= 3000),
-        ("Traffic", f"{len(requests):,}", "requests / window", True),
-        ("Error rate", f"{error_rate:.2f}%", "SLO ≤ 2.00%", error_rate <= 2),
-        ("Total cost", f"${sum(costs):.4f}", "budget ≤ $2.50", sum(costs) <= 2.5),
-        ("Tokens", f"{tokens_in + tokens_out:,}", f"in {tokens_in:,} · out {tokens_out:,}", True),
-        ("Quality proxy", f"{mean(quality) if quality else 0:.2f}", "SLO ≥ 0.75", (mean(quality) if quality else 0) >= 0.75),
+        ("P95 latency", f"{percentile(latency, 95):,.0f} ms" if latency else "N/A", "SLO ≤ 3,000 ms", percentile(latency, 95) <= 3000, bool(latency)),
+        ("Traffic", f"{len(requests):,}" if requests else "N/A", "requests / window", True, bool(requests)),
+        ("Error rate", f"{error_rate:.2f}%" if requests else "N/A", "SLO ≤ 2.00%", error_rate <= 2, bool(requests)),
+        ("Total cost", f"${sum(costs):.4f}" if costs else "N/A", "budget ≤ $2.50", sum(costs) <= 2.5, bool(costs)),
+        ("Tokens", f"{tokens_in + tokens_out:,}" if responses else "N/A", f"in {tokens_in:,} · out {tokens_out:,}", True, bool(responses)),
+        ("Quality proxy", f"{quality_avg:.2f}" if quality else "N/A", "SLO ≥ 0.75", quality_avg >= 0.75, bool(quality)),
     ]
     card_html = "".join(
         f'<article class="card"><div class="card-top"><span>{html.escape(title)}</span>'
-        f'<span class="status {"ok" if ok else "bad"}">{"NOMINAL" if ok else "BREACH"}</span></div>'
+        f'<span class="status {"muted-status" if not has_data else ("ok" if ok else "bad")}">{"NO DATA" if not has_data else ("NOMINAL" if ok else "BREACH")}</span></div>'
         f'<div class="value">{value}</div><div class="hint">{html.escape(hint)}</div></article>'
-        for title, value, hint, ok in cards
+        for title, value, hint, ok, has_data in cards
     )
     error_counts = Counter(str(r.get("error_type") or "unknown") for r in failures)
     error_rows = "".join(
@@ -73,7 +74,7 @@ def build_html(records: list[dict], generated_at: str) -> str:
 .eyebrow{{color:var(--cyan);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700}} h1{{font-size:30px;margin:7px 0 6px;letter-spacing:-.6px}} .subtitle,.muted{{color:var(--muted)}}
 .window{{border:1px solid var(--line);background:#10182a;padding:11px 15px;border-radius:10px;text-align:right;color:var(--muted)}} .window strong{{display:block;color:var(--text);font-size:14px}}
 .grid{{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}} .card,.panel{{background:linear-gradient(145deg,rgba(23,34,58,.96),rgba(14,22,39,.96));border:1px solid var(--line);border-radius:14px;box-shadow:0 14px 35px #05091455}}
-.card{{padding:18px 20px;min-height:132px}} .card-top{{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.7px}} .status{{font-size:10px;font-weight:700;padding:4px 7px;border-radius:20px}} .ok{{background:#123d3a;color:var(--cyan)}} .bad{{background:#4b1d2a;color:var(--red)}} .value{{font-size:34px;font-weight:750;margin:15px 0 4px;letter-spacing:-1px}} .hint{{color:var(--muted);font-size:12px}}
+.card{{padding:18px 20px;min-height:132px}} .card-top{{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.7px}} .status{{font-size:10px;font-weight:700;padding:4px 7px;border-radius:20px}} .ok{{background:#123d3a;color:var(--cyan)}} .bad{{background:#4b1d2a;color:var(--red)}} .muted-status{{background:#28344d;color:var(--muted)}} .value{{font-size:34px;font-weight:750;margin:15px 0 4px;letter-spacing:-1px}} .hint{{color:var(--muted);font-size:12px}}
 .lower{{display:grid;grid-template-columns:1.3fr .7fr;gap:14px;margin-top:14px}} .panel{{padding:22px}} h2{{font-size:15px;margin:0 0 5px}} .panel-note{{color:var(--muted);font-size:12px;margin-bottom:18px}} table{{width:100%;border-collapse:collapse}} td{{padding:12px 0;border-bottom:1px solid var(--line)}} td:last-child{{text-align:right;color:var(--amber)}}
 .bar-row{{display:grid;grid-template-columns:120px 1fr 70px;gap:12px;align-items:center;margin:17px 0;color:var(--muted);font-size:12px}} .bar{{height:8px;background:#263553;border-radius:9px;overflow:hidden}} .fill{{height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:9px}} .footer{{margin-top:22px;color:var(--muted);font-size:11px;display:flex;justify-content:space-between}}
 @media(max-width:900px){{.shell{{padding:24px 18px}}.header{{display:block}}.window{{margin-top:18px;text-align:left;display:inline-block}}.grid,.lower{{grid-template-columns:1fr}}}}
