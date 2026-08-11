@@ -1,16 +1,151 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta http-equiv="refresh" content="30">
-<meta name="viewport" content="width=device-width,initial-scale=1"><title>Day 13 · AI Observability</title>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="refresh" content="30">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Day 13 / React Observability Dashboard</title>
 <style>
-:root{--bg:#0b1020;--panel:#121a2d;--line:#24304a;--text:#edf3ff;--muted:#8c9ab5;--cyan:#4fd1c5;--blue:#73a7ff;--red:#ff7187;--amber:#f6c85f}
-*{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at 90% 0%,#17284a 0,#0b1020 38%);color:var(--text);font:14px Inter,Segoe UI,Arial,sans-serif}
-.shell{max-width:1440px;margin:auto;padding:34px 42px 52px} .header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:28px}
-.eyebrow{color:var(--cyan);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700} h1{font-size:30px;margin:7px 0 6px;letter-spacing:-.6px} .subtitle,.muted{color:var(--muted)}
-.window{border:1px solid var(--line);background:#10182a;padding:11px 15px;border-radius:10px;text-align:right;color:var(--muted)} .window strong{display:block;color:var(--text);font-size:14px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px} .card,.panel{background:linear-gradient(145deg,rgba(23,34,58,.96),rgba(14,22,39,.96));border:1px solid var(--line);border-radius:14px;box-shadow:0 14px 35px #05091455}
-.card{padding:18px 20px;min-height:132px} .card-top{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.7px} .status{font-size:10px;font-weight:700;padding:4px 7px;border-radius:20px} .ok{background:#123d3a;color:var(--cyan)} .bad{background:#4b1d2a;color:var(--red)} .muted-status{background:#28344d;color:var(--muted)} .value{font-size:34px;font-weight:750;margin:15px 0 4px;letter-spacing:-1px} .hint{color:var(--muted);font-size:12px}
-.lower{display:grid;grid-template-columns:1.3fr .7fr;gap:14px;margin-top:14px} .panel{padding:22px} h2{font-size:15px;margin:0 0 5px} .panel-note{color:var(--muted);font-size:12px;margin-bottom:18px} table{width:100%;border-collapse:collapse} td{padding:12px 0;border-bottom:1px solid var(--line)} td:last-child{text-align:right;color:var(--amber)}
-.bar-row{display:grid;grid-template-columns:120px 1fr 70px;gap:12px;align-items:center;margin:17px 0;color:var(--muted);font-size:12px} .bar{height:8px;background:#263553;border-radius:9px;overflow:hidden} .fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:9px} .footer{margin-top:22px;color:var(--muted);font-size:11px;display:flex;justify-content:space-between}
-@media(max-width:900px){.shell{padding:24px 18px}.header{display:block}.window{margin-top:18px;text-align:left;display:inline-block}.grid,.lower{grid-template-columns:1fr}}
-</style></head><body><main class="shell"><header class="header"><div><div class="eyebrow">Day 13 · Production Readiness</div><h1>AI Observability Command Center</h1><div class="subtitle">A decision-focused view of reliability, efficiency and answer quality.</div></div><div class="window"><strong>Last 60 minutes</strong>Auto-refresh · 30 seconds</div></header>
-<section class="grid"><article class="card"><div class="card-top"><span>P95 latency</span><span class="status ok">NOMINAL</span></div><div class="value">2,651 ms</div><div class="hint">SLO ≤ 3,000 ms</div></article><article class="card"><div class="card-top"><span>Traffic</span><span class="status ok">NOMINAL</span></div><div class="value">46</div><div class="hint">requests / window</div></article><article class="card"><div class="card-top"><span>Error rate</span><span class="status bad">BREACH</span></div><div class="value">10.87%</div><div class="hint">SLO ≤ 2.00%</div></article><article class="card"><div class="card-top"><span>Total cost</span><span class="status ok">NOMINAL</span></div><div class="value">$0.1155</div><div class="hint">budget ≤ $2.50</div></article><article class="card"><div class="card-top"><span>Tokens</span><span class="status ok">NOMINAL</span></div><div class="value">8,754</div><div class="hint">in 1,320 · out 7,434</div></article><article class="card"><div class="card-top"><span>Quality proxy</span><span class="status ok">NOMINAL</span></div><div class="value">0.86</div><div class="hint">SLO ≥ 0.75</div></article></section><section class="lower"><article class="panel"><h2>Token consumption</h2><div class="panel-note">Total volume by direction · unit: tokens</div><div class="bar-row"><span>Input</span><div class="bar"><div class="fill" style="width:15.1%"></div></div><strong>1,320</strong></div><div class="bar-row"><span>Output</span><div class="bar"><div class="fill" style="width:84.9%"></div></div><strong>7,434</strong></div><div class="footer"><span>Source: response_sent</span><span>Generated 2026-08-11T03:59:36.533048+00:00</span></div></article><article class="panel"><h2>Error breakdown</h2><div class="panel-note">User-impacting failures · unit: events</div><table><thead><tr><td>Error type</td><td>Count</td></tr></thead><tbody><tr><td>RuntimeError</td><td>5</td></tr></tbody></table><div class="footer"><span>Threshold</span><span>≤ 2.00%</span></div></article></section></main></body></html>
+:root {
+  color-scheme: dark;
+  --bg: #0b0d12;
+  --panel: #151922;
+  --panel-2: #11151e;
+  --line: #2a3242;
+  --text: #f2f5f9;
+  --muted: #9aa4b5;
+  --green: #2dd4bf;
+  --red: #fb7185;
+  --amber: #fbbf24;
+  --blue: #60a5fa;
+  --violet: #a78bfa;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(32, 38, 52, .92), rgba(11, 13, 18, 1) 38%),
+    #0b0d12;
+  color: var(--text);
+  font: 14px Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+}
+.shell { max-width: 1480px; margin: 0 auto; padding: 30px 34px 44px; }
+.topbar { display: grid; grid-template-columns: 1fr auto; gap: 22px; align-items: end; margin-bottom: 24px; }
+.eyebrow { margin: 0 0 9px; color: var(--green); font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+h1 { margin: 0; font-size: clamp(30px, 4vw, 54px); line-height: .98; letter-spacing: 0; }
+.subtitle { margin: 13px 0 0; color: var(--muted); max-width: 720px; font-size: 16px; }
+.runtime { border: 1px solid var(--line); background: rgba(17, 21, 30, .82); border-radius: 8px; padding: 14px 16px; min-width: 190px; text-align: right; }
+.runtime span, .runtime strong { display: block; }
+.runtime span { color: var(--muted); }
+.scoreboard { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
+.metric-card, .panel {
+  background: linear-gradient(180deg, rgba(25, 30, 41, .98), rgba(17, 21, 30, .98));
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, .24);
+}
+.metric-card { min-height: 170px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; }
+.metric-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: var(--muted); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+.pill { border-radius: 999px; padding: 4px 7px; font-size: 10px; font-weight: 900; letter-spacing: .04em; }
+.pill.good { background: rgba(45, 212, 191, .14); color: var(--green); }
+.pill.bad { background: rgba(251, 113, 133, .16); color: var(--red); }
+.pill.muted { background: rgba(154, 164, 181, .12); color: var(--muted); }
+.metric-card strong { display: block; font-size: 30px; line-height: 1; letter-spacing: 0; margin-top: 18px; }
+.metric-card small { color: var(--muted); font-size: 12px; }
+.meter { height: 5px; background: #252c3a; border-radius: 999px; overflow: hidden; margin-top: 14px; }
+.meter span { display: block; height: 100%; background: linear-gradient(90deg, var(--blue), var(--green)); border-radius: inherit; }
+.metric-card:has(.pill.bad) .meter span { background: linear-gradient(90deg, var(--amber), var(--red)); }
+.workbench { display: grid; grid-template-columns: 1.35fr .8fr .85fr; gap: 10px; margin-top: 10px; }
+.panel { padding: 18px; min-height: 270px; }
+.panel-title { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 18px; }
+h2 { margin: 0; font-size: 16px; letter-spacing: 0; }
+.panel-title span, .generated { color: var(--muted); font-size: 12px; }
+.token-stack { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: end; height: 160px; }
+.token-stack div { align-self: end; min-height: 44px; height: min(100%, calc(44px + var(--size) * .018px)); border-radius: 8px; padding: 12px; background: linear-gradient(180deg, rgba(96,165,250,.96), rgba(45,212,191,.68)); display: flex; flex-direction: column; justify-content: flex-end; }
+.token-stack div + div { background: linear-gradient(180deg, rgba(167,139,250,.96), rgba(96,165,250,.68)); }
+.token-stack span { color: rgba(255,255,255,.78); }
+.token-stack strong { font-size: 26px; letter-spacing: 0; }
+table { width: 100%; border-collapse: collapse; }
+td { padding: 12px 0; border-bottom: 1px solid var(--line); }
+td:last-child { color: var(--amber); text-align: right; font-weight: 800; }
+.feature-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.feature-list li { display: flex; justify-content: space-between; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--line); color: var(--muted); }
+.feature-list strong { color: var(--text); }
+.investigation { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
+.signal { border: 1px solid var(--line); background: rgba(17, 21, 30, .7); border-radius: 8px; padding: 14px; }
+.signal span { display: block; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+.signal strong { font-size: 15px; }
+@media (max-width: 1180px) { .scoreboard { grid-template-columns: repeat(3, 1fr); } .workbench { grid-template-columns: 1fr; } }
+@media (max-width: 760px) { .shell { padding: 22px 16px 32px; } .topbar { grid-template-columns: 1fr; } .runtime { text-align: left; } .scoreboard, .investigation { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div id="root"><main class="shell"><header class="topbar"><section><p class="eyebrow">Day 13 / AI Operations</p><h1>Observability Command Center</h1><p class="subtitle">Production-readiness view across reliability, spend, traffic, and answer quality.</p></section><aside class="runtime"><span>Last 60 minutes</span><strong>30s refresh</strong></aside></header><section class="scoreboard"><article class="metric-card"><div class="metric-head"><span>P95 latency</span><span class="pill good">NOMINAL</span></div><strong>2,651 ms</strong><small>SLO &lt;= 3,000 ms</small><div class="meter"><span style="width:88.4%"></span></div></article><article class="metric-card"><div class="metric-head"><span>Traffic</span><span class="pill good">NOMINAL</span></div><strong>46</strong><small>requests / window</small><div class="meter"><span style="width:92.0%"></span></div></article><article class="metric-card"><div class="metric-head"><span>Error rate</span><span class="pill bad">BREACH</span></div><strong>10.87%</strong><small>SLO &lt;= 2.00%</small><div class="meter"><span style="width:100.0%"></span></div></article><article class="metric-card"><div class="metric-head"><span>Total cost</span><span class="pill good">NOMINAL</span></div><strong>$0.1155</strong><small>budget &lt;= $2.50</small><div class="meter"><span style="width:4.6%"></span></div></article><article class="metric-card"><div class="metric-head"><span>Tokens</span><span class="pill good">NOMINAL</span></div><strong>8,754</strong><small>in 1,320 / out 7,434</small><div class="meter"><span style="width:17.5%"></span></div></article><article class="metric-card"><div class="metric-head"><span>Quality proxy</span><span class="pill good">NOMINAL</span></div><strong>0.86</strong><small>SLO &gt;= 0.75</small><div class="meter"><span style="width:86.1%"></span></div></article></section><section class="workbench"><article class="panel wide"><div class="panel-title"><h2>Token mix</h2><span>response_sent</span></div><div class="token-stack"><div style="--size:1320"><span>Input</span><strong>1,320</strong></div><div style="--size:7434"><span>Output</span><strong>7,434</strong></div></div><p class="generated">Generated 2026-08-11T04:09:53+00:00</p></article><article class="panel"><div class="panel-title"><h2>Error breakdown</h2><span>SLO <= 2%</span></div><table><tr><td>RuntimeError</td><td>5</td></tr></table></article><article class="panel"><div class="panel-title"><h2>Traffic by feature</h2><span>request_received</span></div><ul class="feature-list"><li><span>refund</span><strong>20</strong></li><li><span>qa</span><strong>16</strong></li><li><span>monitoring</span><strong>6</strong></li><li><span>summary</span><strong>4</strong></li></ul></article></section></main></div>
+<script id="dashboard-data" type="application/json">{&quot;generatedAt&quot;: &quot;2026-08-11T04:09:53+00:00&quot;, &quot;window&quot;: {&quot;label&quot;: &quot;Last 60 minutes&quot;, &quot;refreshSeconds&quot;: 30}, &quot;summary&quot;: {&quot;records&quot;: 159, &quot;requests&quot;: 46, &quot;responses&quot;: 41, &quot;failures&quot;: 5, &quot;correlationIds&quot;: 74}, &quot;cards&quot;: [{&quot;id&quot;: &quot;latency&quot;, &quot;label&quot;: &quot;P95 latency&quot;, &quot;value&quot;: &quot;2,651 ms&quot;, &quot;subvalue&quot;: &quot;SLO &lt;= 3,000 ms&quot;, &quot;status&quot;: &quot;NOMINAL&quot;, &quot;tone&quot;: &quot;good&quot;, &quot;progress&quot;: 88.36666666666667}, {&quot;id&quot;: &quot;traffic&quot;, &quot;label&quot;: &quot;Traffic&quot;, &quot;value&quot;: &quot;46&quot;, &quot;subvalue&quot;: &quot;requests / window&quot;, &quot;status&quot;: &quot;NOMINAL&quot;, &quot;tone&quot;: &quot;good&quot;, &quot;progress&quot;: 92.0}, {&quot;id&quot;: &quot;errors&quot;, &quot;label&quot;: &quot;Error rate&quot;, &quot;value&quot;: &quot;10.87%&quot;, &quot;subvalue&quot;: &quot;SLO &lt;= 2.00%&quot;, &quot;status&quot;: &quot;BREACH&quot;, &quot;tone&quot;: &quot;bad&quot;, &quot;progress&quot;: 100}, {&quot;id&quot;: &quot;cost&quot;, &quot;label&quot;: &quot;Total cost&quot;, &quot;value&quot;: &quot;$0.1155&quot;, &quot;subvalue&quot;: &quot;budget &lt;= $2.50&quot;, &quot;status&quot;: &quot;NOMINAL&quot;, &quot;tone&quot;: &quot;good&quot;, &quot;progress&quot;: 4.6188}, {&quot;id&quot;: &quot;tokens&quot;, &quot;label&quot;: &quot;Tokens&quot;, &quot;value&quot;: &quot;8,754&quot;, &quot;subvalue&quot;: &quot;in 1,320 / out 7,434&quot;, &quot;status&quot;: &quot;NOMINAL&quot;, &quot;tone&quot;: &quot;good&quot;, &quot;progress&quot;: 17.508000000000003}, {&quot;id&quot;: &quot;quality&quot;, &quot;label&quot;: &quot;Quality proxy&quot;, &quot;value&quot;: &quot;0.86&quot;, &quot;subvalue&quot;: &quot;SLO &gt;= 0.75&quot;, &quot;status&quot;: &quot;NOMINAL&quot;, &quot;tone&quot;: &quot;good&quot;, &quot;progress&quot;: 86.09756097560975}], &quot;tokens&quot;: {&quot;input&quot;: 1320, &quot;output&quot;: 7434}, &quot;errors&quot;: [{&quot;type&quot;: &quot;RuntimeError&quot;, &quot;count&quot;: 5}], &quot;features&quot;: [{&quot;feature&quot;: &quot;refund&quot;, &quot;count&quot;: 20}, {&quot;feature&quot;: &quot;qa&quot;, &quot;count&quot;: 16}, {&quot;feature&quot;: &quot;monitoring&quot;, &quot;count&quot;: 6}, {&quot;feature&quot;: &quot;summary&quot;, &quot;count&quot;: 4}], &quot;investigation&quot;: {&quot;primarySignal&quot;: &quot;HighErrorRateAlert&quot;, &quot;rootCauseHint&quot;: &quot;tool_fail practice incident&quot;, &quot;joinKey&quot;: &quot;correlation_id&quot;}}</script>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script>
+(function () {
+  const raw = document.getElementById("dashboard-data").textContent;
+  const data = JSON.parse(raw);
+  if (!window.React || !window.ReactDOM) return;
+  const h = React.createElement;
+  function MetricCard({ card }) {
+    return h("article", { className: "metric-card" },
+      h("div", { className: "metric-head" },
+        h("span", null, card.label),
+        h("span", { className: "pill " + card.tone }, card.status)
+      ),
+      h("div", null,
+        h("strong", null, card.value),
+        h("small", null, card.subvalue),
+        h("div", { className: "meter" }, h("span", { style: { width: card.progress + "%" } }))
+      )
+    );
+  }
+  function PanelTitle({ title, note }) {
+    return h("div", { className: "panel-title" }, h("h2", null, title), h("span", null, note));
+  }
+  function App() {
+    const totalTokens = Math.max(1, data.tokens.input + data.tokens.output);
+    return h("main", { className: "shell" },
+      h("header", { className: "topbar" },
+        h("section", null,
+          h("p", { className: "eyebrow" }, "Day 13 / AI Operations"),
+          h("h1", null, "Observability Command Center"),
+          h("p", { className: "subtitle" }, "Production-readiness view across reliability, spend, traffic, and answer quality.")
+        ),
+        h("aside", { className: "runtime" }, h("span", null, data.window.label), h("strong", null, data.window.refreshSeconds + "s refresh"))
+      ),
+      h("section", { className: "scoreboard" }, data.cards.map(card => h(MetricCard, { key: card.id, card }))),
+      h("section", { className: "workbench" },
+        h("article", { className: "panel wide" },
+          h(PanelTitle, { title: "Token mix", note: "response_sent" }),
+          h("div", { className: "token-stack" },
+            h("div", { style: { "--size": data.tokens.input } }, h("span", null, "Input"), h("strong", null, data.tokens.input.toLocaleString())),
+            h("div", { style: { "--size": data.tokens.output } }, h("span", null, "Output"), h("strong", null, data.tokens.output.toLocaleString()))
+          ),
+          h("p", { className: "generated" }, "Generated " + data.generatedAt)
+        ),
+        h("article", { className: "panel" },
+          h(PanelTitle, { title: "Error breakdown", note: "SLO <= 2%" }),
+          h("table", null, h("tbody", null, (data.errors.length ? data.errors : [{ type: "No failures in this window", count: "" }]).map(row => h("tr", { key: row.type }, h("td", null, row.type), h("td", null, row.count)))))
+        ),
+        h("article", { className: "panel" },
+          h(PanelTitle, { title: "Traffic by feature", note: "request_received" }),
+          h("ul", { className: "feature-list" }, (data.features.length ? data.features : [{ feature: "No traffic", count: 0 }]).map(row => h("li", { key: row.feature }, h("span", null, row.feature), h("strong", null, row.count))))
+        )
+      ),
+      h("section", { className: "investigation" },
+        h("div", { className: "signal" }, h("span", null, "Primary signal"), h("strong", null, data.investigation.primarySignal)),
+        h("div", { className: "signal" }, h("span", null, "Join key"), h("strong", null, data.investigation.joinKey)),
+        h("div", { className: "signal" }, h("span", null, "Root-cause hint"), h("strong", null, data.investigation.rootCauseHint))
+      )
+    );
+  }
+  ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+})();
+</script>
+</body>
+</html>

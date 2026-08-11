@@ -13,9 +13,9 @@
 ## 2. Kết quả kỹ thuật
 
 - Điểm `validate_logs.py`: 100/100.
-- Tổng số traces/correlation IDs quan sát được trong log local: 70 unique correlation IDs.
+- Tổng số traces/correlation IDs quan sát được trong log local: 74 unique correlation IDs.
 - Số PII leak còn lại: 0 theo `validate_logs.py`.
-- Link/đường dẫn dashboard: `data/dashboard.html`.
+- Link/đường dẫn dashboard: `data/dashboard.html` (React-powered local dashboard).
 
 ## 3. Logging và tracing
 
@@ -37,7 +37,7 @@
 ## 5. Dashboard, SLO và alerts
 
 - Kết quả `validate_dashboard.py`: `HỢP LỆ: 6/6 panel có trong dashboard contract.`
-- Evidence dashboard: `data/dashboard.html`, sinh bằng `python scripts/build_dashboard.py`.
+- Evidence dashboard: `data/dashboard.html`, sinh bằng `python scripts/build_dashboard.py`; giao diện dùng ReactJS với fallback HTML tĩnh để vẫn mở được khi CDN chưa tải.
 - SLO đã chọn và lý do:
   - `latency_p95_ms <= 3000ms`: Cam kết 99.5% request phản hồi dưới 3 giây để đảm bảo trải nghiệm người dùng không bị gián đoạn.
   - `error_rate_pct <= 2%`: Giữ tỉ lệ lỗi 500 dưới 2% (99% Uptime) để đảm bảo độ tin cậy của dịch vụ API.
