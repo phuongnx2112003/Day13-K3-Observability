@@ -2,13 +2,13 @@
 
 ## 1. Thông tin nhóm
 
-- Tên nhóm:
+- Tên nhóm: 2k345
 - Repository URL: https://github.com/phuongnx2112003/Day13-K3-Observability
-- Commit SHA cuối: xem HEAD của branch `member-c-qa-chief-investigator` sau khi push cuối.
+- Commit SHA cuối: xem `HEAD` của branch `main` sau lần push cuối (`git rev-parse --short main`).
 - Thành viên và vai trò:
-  - Thành viên A: Tech Lead/Backend Engineer, phụ trách CP1 middleware, correlation ID, log enrichment.
-  - Thành viên B: SRE & Alerts Engineer, phụ trách CP2 Langfuse, SLO/alert rules, alert runbook.
-  - Thành viên C: QA & Chief Investigator, phụ trách dashboard spec/runtime evidence, load test, practice incident và tổng hợp báo cáo.
+  - Thành viên A — Nguyễn Xuân Phượng (2A202601874): Tech Lead/Backend Engineer, phụ trách CP1 middleware, correlation ID, log enrichment.
+  - Thành viên B — Nguyễn Đào Nam Hải (2A202601037): Dashboard/QA & Chief Investigator, phụ trách dashboard spec/runtime evidence, load test, practice incident và tổng hợp báo cáo.
+  - Thành viên C — Lê Nguyễn Minh Đức (2A202601013): SRE & Alerts Engineer, phụ trách CP2 Langfuse, SLO/alert rules, alert runbook.
 
 ## 2. Kết quả kỹ thuật
 
@@ -60,8 +60,8 @@
 
 Với mỗi thành viên, ghi rõ nhiệm vụ và link commit/PR tương ứng.
 
-| Thành viên | Phần việc | Commit/PR | Điều đã học |
+| Thành viên | Phần việc | Commit/PR đã đối chiếu | Điều đã học |
 |---|---|---|---|
-| A | Middleware correlation ID, structured logging, metadata enrichment, PII redaction evidence | `489dfea` và các commit CP1 trên `main` | Log cần đủ context nhưng không được để lộ PII |
-| B | Langfuse trace/prompt evidence, SLO, alert rules, runbook | Các commit CP2 trên `main`, evidence prompt/rollback/trace trong `submission/evidence/` | Alert tốt nên dựa trên triệu chứng/SLO và nối được Metrics -> Traces -> Logs |
-| C | Dashboard local, QA tests, incident practice checklist, custom-port QA scripts, evidence/report phần độc lập | Branch `member-c-qa-chief-investigator`, commits `8ccc8b0`, `26827e3`, `32288c3`, `f647b47`, `666d9fe` và commit evidence cuối | Observability cần nối được metric -> correlation ID -> log/trace, và script test phải không phụ thuộc cứng vào một port |
+| Nguyễn Xuân Phượng — A | Middleware correlation ID, structured logging, metadata enrichment, PII redaction evidence | Direct commits trên `main`: [`f7ef456`](https://github.com/phuongnx2112003/Day13-K3-Observability/commit/f7ef456), [`b54d729`](https://github.com/phuongnx2112003/Day13-K3-Observability/commit/b54d729), [`489dfea`](https://github.com/phuongnx2112003/Day13-K3-Observability/commit/489dfea). Không có PR riêng. | Log cần đủ context nhưng không được để lộ PII |
+| Nguyễn Đào Nam Hải — B | Dashboard local, QA tests, incident practice checklist, custom-port QA scripts, evidence/report | [`PR #1`](https://github.com/phuongnx2112003/Day13-K3-Observability/pull/1) và [`PR #3`](https://github.com/phuongnx2112003/Day13-K3-Observability/pull/3); commits [`8ccc8b0`](https://github.com/phuongnx2112003/Day13-K3-Observability/commit/8ccc8b0), [`26827e3`](https://github.com/phuongnx2112003/Day13-K3-Observability/commit/26827e3), [`32288c3`](https://github.com/phuongnx2112003/Day13-K3-Observability/commit/32288c3), [`f647b47`](https://github.com/phuongnx2112003/Day13-K3-Observability/commit/f647b47), [`666d9fe`](https://github.com/phuongnx2112003/Day13-K3-Observability/commit/666d9fe), [`4f8f501`](https://github.com/phuongnx2112003/Day13-K3-Observability/commit/4f8f501). | Observability cần nối được metric -> correlation ID -> log/trace, và script test phải không phụ thuộc cứng vào một port |
+| Lê Nguyễn Minh Đức — C | Langfuse trace/prompt evidence, SLO, alert rules, runbook | [`PR #2`](https://github.com/phuongnx2112003/Day13-K3-Observability/pull/2); commit [`37e6d0d`](https://github.com/phuongnx2112003/Day13-K3-Observability/commit/37e6d0d), kèm evidence prompt/rollback/trace trong `submission/evidence/`. | Alert tốt nên dựa trên triệu chứng/SLO và nối được Metrics -> Traces -> Logs |
