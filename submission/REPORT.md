@@ -13,14 +13,14 @@
 ## 2. Kết quả kỹ thuật
 
 - Điểm `validate_logs.py`: 100/100.
-- Tổng số traces/correlation IDs quan sát được trong log local: 47 unique correlation IDs.
+- Tổng số traces/correlation IDs quan sát được trong log local: 70 unique correlation IDs.
 - Số PII leak còn lại: 0 theo `validate_logs.py`.
 - Link/đường dẫn dashboard: `data/dashboard.html`.
 
 ## 3. Logging và tracing
 
 - Evidence correlation ID: request PII probe trả về `correlation_id=req-c0ffee12`; log `response_sent` giữ cùng correlation ID.
-- Evidence PII redaction: request chứa `namhai@example.com` và `0912345678`; `validate_logs.py` báo `Potential PII leaks detected: 0`.
+- Evidence PII redaction: request kiểm thử chứa email/số điện thoại mẫu; log chỉ giữ `[REDACTED_EMAIL]` và `[REDACTED_PHONE_VN]`, `validate_logs.py` báo `Potential PII leaks detected: 0`.
 - Evidence trace waterfall: phụ thuộc Langfuse/trace UI của phần CP2; cần bổ sung ảnh từ thành viên B hoặc từ môi trường trace khi bật Langfuse.
 - Giải thích một span/log đáng chú ý: trong `rag_slow`, request `req-6c10f709` cho feature `refund` có latency cao; root cause là practice incident làm chậm retrieval.
 
