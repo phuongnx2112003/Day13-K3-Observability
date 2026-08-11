@@ -8,3 +8,4 @@ data/audit.jsonl
 .pytest_cache/
 .pytest-run*/
 .antigravity/
+venv/
