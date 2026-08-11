@@ -72,6 +72,11 @@ class LabAgent:
             cost_details={"total": cost_usd},
             prompt=prompt.managed_prompt,
         )
+        try:
+            langfuse_client.flush()
+        except Exception:
+            pass
+
 
         metrics.record_request(
             latency_ms=latency_ms,
