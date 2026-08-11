@@ -13,7 +13,7 @@
 ## 2. Kết quả kỹ thuật
 
 - Điểm `validate_logs.py`: 100/100.
-- Tổng số traces/correlation IDs quan sát được trong log local: 74 unique correlation IDs.
+- Evidence log CP1 tại commit `5c66c9b` có 74 unique correlation IDs; các benchmark bonus chạy sau đó có thể làm số realtime trong `data/logs.jsonl` tăng thêm.
 - Số PII leak còn lại: 0 theo `validate_logs.py`.
 - Link/đường dẫn dashboard: `data/dashboard.html` (React-powered local dashboard).
 
@@ -65,3 +65,10 @@ Với mỗi thành viên, ghi rõ nhiệm vụ và link commit/PR tương ứng.
 | Nguyễn Xuân Phượng — A | Middleware correlation ID, structured logging, metadata enrichment, PII redaction evidence | Direct commits trên `main`: [`f7ef456`](https://github.com/phuongnx2112003/Day13-K3-Observability/commit/f7ef456), [`b54d729`](https://github.com/phuongnx2112003/Day13-K3-Observability/commit/b54d729), [`489dfea`](https://github.com/phuongnx2112003/Day13-K3-Observability/commit/489dfea). Không có PR riêng. | Log cần đủ context nhưng không được để lộ PII |
 | Nguyễn Đào Nam Hải — B | Dashboard local, QA tests, incident practice checklist, custom-port QA scripts, evidence/report | [`PR #1`](https://github.com/phuongnx2112003/Day13-K3-Observability/pull/1) và [`PR #3`](https://github.com/phuongnx2112003/Day13-K3-Observability/pull/3); commits [`8ccc8b0`](https://github.com/phuongnx2112003/Day13-K3-Observability/commit/8ccc8b0), [`26827e3`](https://github.com/phuongnx2112003/Day13-K3-Observability/commit/26827e3), [`32288c3`](https://github.com/phuongnx2112003/Day13-K3-Observability/commit/32288c3), [`f647b47`](https://github.com/phuongnx2112003/Day13-K3-Observability/commit/f647b47), [`666d9fe`](https://github.com/phuongnx2112003/Day13-K3-Observability/commit/666d9fe), [`4f8f501`](https://github.com/phuongnx2112003/Day13-K3-Observability/commit/4f8f501). | Observability cần nối được metric -> correlation ID -> log/trace, và script test phải không phụ thuộc cứng vào một port |
 | Lê Nguyễn Minh Đức — C | Langfuse trace/prompt evidence, SLO, alert rules, runbook | [`PR #2`](https://github.com/phuongnx2112003/Day13-K3-Observability/pull/2); commit [`37e6d0d`](https://github.com/phuongnx2112003/Day13-K3-Observability/commit/37e6d0d), kèm evidence prompt/rollback/trace trong `submission/evidence/`. | Alert tốt nên dựa trên triệu chứng/SLO và nối được Metrics -> Traces -> Logs |
+
+## 8. Bonus — Cost optimization, audit và automation
+
+- Cost guardrail: khi `cost_spike` bật, `FakeLLM` giới hạn output ở `MAX_OUTPUT_TOKENS=200` để kiểm soát token/cost.
+- Before/after cùng 10 request: `total_cost_usd` giảm từ `0.0864` xuống `0.0310` (giảm **64.1%**); evidence: `submission/evidence/bonus-cost-optimization.md`.
+- Audit log riêng: `data/audit.jsonl` ghi `configuration_loaded`, `incident_enabled`, và `incident_disabled`; evidence snapshot: `submission/evidence/audit.jsonl`.
+- Custom automation: `python scripts/anomaly_check.py` phát hiện PII leak, p95 latency và error rate theo `config/slo.yaml`; evidence run sạch: `submission/evidence/bonus-anomaly-check.json`.

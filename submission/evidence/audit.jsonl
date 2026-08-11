@@ -1,0 +1,10 @@
+{"ts": "2026-08-11T05:07:07.877453+00:00", "event": "configuration_loaded", "service": "day13-observability-lab", "env": "dev", "details": {"tracing_enabled": true, "model": "claude-sonnet-4-5"}}
+{"ts": "2026-08-11T05:07:08.723109+00:00", "event": "configuration_loaded", "service": "day13-observability-lab", "env": "dev", "details": {"tracing_enabled": true, "model": "claude-sonnet-4-5"}}
+{"ts": "2026-08-11T05:07:31.331131+00:00", "event": "incident_enabled", "service": "day13-observability-lab", "env": "dev", "details": {"incident": "cost_spike"}}
+{"ts": "2026-08-11T05:08:04.585115+00:00", "event": "incident_disabled", "service": "day13-observability-lab", "env": "dev", "details": {"incident": "cost_spike"}}
+{"ts": "2026-08-11T05:08:15.447709+00:00", "event": "configuration_loaded", "service": "day13-observability-lab", "env": "dev", "details": {"tracing_enabled": true, "model": "claude-sonnet-4-5"}}
+{"ts": "2026-08-11T05:08:24.024019+00:00", "event": "incident_enabled", "service": "day13-observability-lab", "env": "dev", "details": {"incident": "cost_spike"}}
+{"ts": "2026-08-11T05:09:01.747420+00:00", "event": "configuration_loaded", "service": "day13-observability-lab", "env": "dev", "details": {"tracing_enabled": true, "model": "claude-sonnet-4-5"}}
+{"ts": "2026-08-11T05:09:10.466777+00:00", "event": "incident_enabled", "service": "day13-observability-lab", "env": "dev", "details": {"incident": "cost_spike"}}
+{"ts": "2026-08-11T05:09:49.751684+00:00", "event": "incident_disabled", "service": "day13-observability-lab", "env": "dev", "details": {"incident": "cost_spike"}}
+{"ts": "2026-08-11T05:09:59.794914+00:00", "event": "incident_disabled", "service": "day13-observability-lab", "env": "dev", "details": {"incident": "cost_spike"}}

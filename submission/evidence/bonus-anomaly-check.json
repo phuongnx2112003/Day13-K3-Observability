@@ -1,0 +1,8 @@
+{
+  "records_analyzed": 226,
+  "requests": 104,
+  "p95_latency_ms": 1536.0,
+  "error_rate_pct": 0.0,
+  "pii_leaks": [],
+  "anomalies": []
+}
