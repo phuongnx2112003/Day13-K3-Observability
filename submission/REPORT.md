@@ -4,7 +4,7 @@
 
 - Tên nhóm: 2k345
 - Repository URL: https://github.com/phuongnx2112003/Day13-K3-Observability
-- Commit SHA evidence logging/validation: `5c66c9b` (74 correlation IDs unique, validator 100/100).
+- Commit SHA evidence logging/validation: `8397a9a32879d9ee832e916e12584afc0ee938fc`
 - Thành viên và vai trò:
   - Thành viên A — Nguyễn Xuân Phượng (2A202601874): Tech Lead/Backend Engineer, phụ trách CP1 middleware, correlation ID, log enrichment.
   - Thành viên B — Nguyễn Đào Nam Hải (2A202601037): Dashboard/QA & Chief Investigator, phụ trách dashboard spec/runtime evidence, load test, practice incident và tổng hợp báo cáo.
